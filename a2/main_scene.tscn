@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=27 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
+[ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
 [ext_resource type="Texture2D" uid="uid://7he6ylsvw371" path="res://Assets/Main Ship_Spritesheet.png" id="2_utvax"]
 [ext_resource type="Script" path="res://animated_sprite_2d.gd" id="3_1cj5q"]
 
@@ -108,7 +109,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_yx14y")
 }, {
 "duration": 1.0,
@@ -217,11 +218,12 @@ size_flags_vertical = 0
 text = "Alan Fogel - AJF214"
 
 [node name="Player" type="Node2D" parent="."]
+script = ExtResource("1_s2bo5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
-animation = &"Idle"
+animation = &"FireBullet"
 script = ExtResource("3_1cj5q")
 
 [node name="Camera2D" type="Camera2D" parent="."]
