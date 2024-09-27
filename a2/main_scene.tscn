@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dkcsftjub2r2e"]
+
+[node name="Main Scene" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10748, 0.10748, 0.10748, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Alan Fogel - AJF214"
