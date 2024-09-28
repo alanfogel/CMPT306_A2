@@ -1,10 +1,15 @@
 extends CharacterBody2D
 
 @export var turn_speed := 3.0
-@export var recoil_force := 1.0
+@export var recoil_force := 30.0
 @export var warping_duration := 1.0
+@export var fire_rate := 0.75 
+@export var fire_animation_duration := 0.5
 
 var warping_timer := 0.0
+var fire_cooldown := 0.0
+var fire_animation_timer := 0.0
+var is_firing = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -20,12 +25,13 @@ func _physics_process(delta: float) -> void:
 	var rotate_sprite = $RotateSprite
 	var fire_sprite = $FireSprite
 	var warp_sprite = $WarpSprite
+	var fire_sound = $FireSound
+
 	var camera = get_viewport().get_camera_2d()
 	var viewport_size = get_viewport_rect().size
 
 	if rotate_sprite != null and fire_sprite != null:
 		var is_rotating = false
-		var is_fireing = false
 
 		if Input.is_action_pressed("ui_left"):
 			rotate(-turn_speed * delta)
@@ -37,23 +43,31 @@ func _physics_process(delta: float) -> void:
 			is_rotating = true
 
 
-		if Input.is_action_pressed("ui_accept"):
+		if Input.is_action_pressed("ui_accept") and fire_cooldown <= 0:
 			# spawn bullet
 
 			# player is pushed backwards
 			var direction = Vector2(-sin(rotation), cos(rotation)).normalized()
-
 			velocity += direction * recoil_force
 
 			fire_sprite.play("FireBullet")
-			is_fireing = true
+			fire_sound.play()
+			is_firing = true
+			fire_animation_timer = fire_animation_duration
+
+			fire_cooldown = fire_rate
 
 		# Play Idle animation only if not rotating or firing
 		if not is_rotating:
 			rotate_sprite.play("Idle")
-		if not is_fireing:
+		if not is_firing:
 			fire_sprite.play("Idle")
-
+	
+	# Update fire animation timer
+		if is_firing:
+			fire_animation_timer -= delta
+			if fire_animation_timer <= 0:
+				is_firing = false
 	
 	# Move the player
 	move_and_slide();
@@ -87,3 +101,6 @@ func _physics_process(delta: float) -> void:
 		warping_timer -= delta
 		if warping_timer <= 0:
 			warp_sprite.play("Idle")  # Optionally switch to an idle animation
+
+	if fire_cooldown > 0:
+		fire_cooldown -= delta

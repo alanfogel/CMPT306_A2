@@ -1,10 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=34 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
 [ext_resource type="Texture2D" uid="uid://7he6ylsvw371" path="res://Assets/Main Ship_Spritesheet.png" id="2_utvax"]
 [ext_resource type="Script" path="res://animated_sprite_2d.gd" id="3_1cj5q"]
 [ext_resource type="Script" path="res://fire_sprite.gd" id="5_31rsb"]
+[ext_resource type="AudioStream" uid="uid://b87412jm2lc3l" path="res://Assets/laser gun.wav" id="6_3rlhi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hstjg"]
 atlas = ExtResource("1_fulav")
@@ -289,12 +290,17 @@ script = ExtResource("3_1cj5q")
 
 [node name="FireSprite" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_au2bv")
-animation = &"FireBullet"
+animation = &"Idle"
 script = ExtResource("5_31rsb")
 
 [node name="WarpSprite" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_au2bv")
 animation = &"Idle"
 script = ExtResource("5_31rsb")
+
+[node name="FireSound" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_3rlhi")
+volume_db = -21.82
+pitch_scale = 0.59
 
 [node name="Camera2D" type="Camera2D" parent="."]
