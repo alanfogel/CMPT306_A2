@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=33 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
 [ext_resource type="Texture2D" uid="uid://7he6ylsvw371" path="res://Assets/Main Ship_Spritesheet.png" id="2_utvax"]
 [ext_resource type="Script" path="res://animated_sprite_2d.gd" id="3_1cj5q"]
+[ext_resource type="Script" path="res://fire_sprite.gd" id="5_31rsb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hstjg"]
 atlas = ExtResource("1_fulav")
@@ -193,6 +194,42 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_svdcq"]
+atlas = ExtResource("1_fulav")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhvyr"]
+atlas = ExtResource("1_fulav")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yamog"]
+atlas = ExtResource("1_fulav")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c30ws"]
+atlas = ExtResource("1_fulav")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_au2bv"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_svdcq")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_uhvyr")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_yamog")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_c30ws")
+}],
+"loop": true,
+"name": &"FireBullet",
+"speed": 5.0
+}]
+
 [node name="Main Scene" type="Node2D"]
 
 [node name="Background" type="CanvasLayer" parent="."]
@@ -220,10 +257,15 @@ text = "Alan Fogel - AJF214"
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("1_s2bo5")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+[node name="RotateSprite" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
 animation = &"FireBullet"
 script = ExtResource("3_1cj5q")
+
+[node name="FireSprite" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_au2bv")
+animation = &"FireBullet"
+script = ExtResource("5_31rsb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
