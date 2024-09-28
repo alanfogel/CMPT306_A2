@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=35 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
+[ext_resource type="Script" path="res://main_scene.gd" id="1_u0i54"]
 [ext_resource type="Texture2D" uid="uid://7he6ylsvw371" path="res://Assets/Main Ship_Spritesheet.png" id="2_utvax"]
 [ext_resource type="Script" path="res://animated_sprite_2d.gd" id="3_1cj5q"]
 [ext_resource type="Script" path="res://fire_sprite.gd" id="5_31rsb"]
@@ -254,6 +255,7 @@ animations = [{
 }]
 
 [node name="Main Scene" type="Node2D"]
+script = ExtResource("1_u0i54")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -304,3 +306,7 @@ volume_db = -21.82
 pitch_scale = 0.59
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AsteroidTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
