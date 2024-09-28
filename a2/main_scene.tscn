@@ -194,19 +194,19 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_svdcq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5klrd"]
 atlas = ExtResource("1_fulav")
 region = Rect2(0, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uhvyr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5r7ym"]
 atlas = ExtResource("1_fulav")
 region = Rect2(32, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yamog"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_botdm"]
 atlas = ExtResource("1_fulav")
 region = Rect2(64, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c30ws"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3af4c"]
 atlas = ExtResource("1_fulav")
 region = Rect2(96, 96, 32, 32)
 
@@ -214,19 +214,41 @@ region = Rect2(96, 96, 32, 32)
 animations = [{
 "frames": [{
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_svdcq")
+"texture": SubResource("AtlasTexture_5klrd")
 }, {
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_uhvyr")
+"texture": SubResource("AtlasTexture_5r7ym")
 }, {
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_yamog")
+"texture": SubResource("AtlasTexture_botdm")
 }, {
 "duration": 0.5,
-"texture": SubResource("AtlasTexture_c30ws")
+"texture": SubResource("AtlasTexture_3af4c")
 }],
 "loop": true,
 "name": &"FireBullet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxbjy")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ej5cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cf4nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nuita")
+}],
+"loop": true,
+"name": &"Warping",
 "speed": 5.0
 }]
 
@@ -260,12 +282,19 @@ script = ExtResource("1_s2bo5")
 [node name="RotateSprite" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
-animation = &"FireBullet"
+animation = &"Warping"
+frame = 2
+frame_progress = 0.247611
 script = ExtResource("3_1cj5q")
 
 [node name="FireSprite" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_au2bv")
 animation = &"FireBullet"
+script = ExtResource("5_31rsb")
+
+[node name="WarpSprite" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_au2bv")
+animation = &"Idle"
 script = ExtResource("5_31rsb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
