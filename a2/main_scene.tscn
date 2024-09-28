@@ -290,7 +290,7 @@ script = ExtResource("3_1cj5q")
 
 [node name="FireSprite" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_au2bv")
-animation = &"Idle"
+animation = &"FireBullet"
 script = ExtResource("5_31rsb")
 
 [node name="WarpSprite" type="AnimatedSprite2D" parent="Player"]
