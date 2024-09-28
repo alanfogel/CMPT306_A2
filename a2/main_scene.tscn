@@ -217,7 +217,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Alan Fogel - AJF214"
 
-[node name="Player" type="Node2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("1_s2bo5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
