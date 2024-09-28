@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var warping_duration := 1.0
 @export var fire_rate := 0.75 
 @export var fire_animation_duration := 0.5
+@export var rocket_scene := load("res://rocket.tscn")
 
 var warping_timer := 0.0
 var fire_cooldown := 0.0
@@ -14,8 +15,7 @@ var is_firing = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -44,7 +44,12 @@ func _physics_process(delta: float) -> void:
 
 
 		if Input.is_action_pressed("ui_accept") and fire_cooldown <= 0:
-			# spawn bullet
+			# spawn rocket
+			var rocket = rocket_scene.instantiate()
+		
+			rocket.position = position
+			rocket.rotation = rotation
+			get_parent().add_child(rocket)
 
 			# player is pushed backwards
 			var direction = Vector2(-sin(rotation), cos(rotation)).normalized()
