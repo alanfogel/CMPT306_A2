@@ -28,13 +28,9 @@ func _ready() -> void:
 	spark_particles.emitting = false
 	health_bar = get_node("/root/Main Scene/Healthbar/Control/HealthBar")
 	animation_player = $DamageSprite
-	if animation_player == null:
-		print("AnimatedSprite2D node not found")
-		return
 	health_bar.max_value = max_health  # Set the max value of the health bar
 	health_bar.value = max_health  # Initialize the health bar to full
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
-	print("Connected animation_finished signal")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -99,7 +95,7 @@ func _physics_process(delta: float) -> void:
 	# Move the player and check for collisions
 	var collision = move_and_collide(velocity * delta)
 	
-	move_and_slide()
+	move_and_slide() # TODO: is this exter
 		
 	var collided = false
 	if collision:
@@ -133,7 +129,6 @@ func _physics_process(delta: float) -> void:
 	if health <= 0 && death_timer > 0:
 		death_timer -= delta
 		if death_timer <= 0:
-			print("deadge fr fr")
 			get_tree().reload_current_scene()
 		
 	# Teleporting the player to the other side of the screen
@@ -170,9 +165,7 @@ func _physics_process(delta: float) -> void:
 		fire_cooldown -= delta
 
 # Called when the death animation finishes
+# TODO: Delete this function if not needed
 func _on_animation_finished(anim_name: String) -> void:
-	print("Animation finished: ", anim_name)
 	if anim_name == "Die":
-		print("anim_name == Die")
-		print("Death animation finished, pausing the game")
 		get_tree().paused = true

@@ -26,8 +26,7 @@ func _on_Timer_timeout() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("asteroids"):
-		get_parent().get_child(4).play()
+		get_parent().get_child(4).play() # TODO: This is a hack, find a better way to play the sound
 		var asteroid = body as Asteroid
 		asteroid.on_hit()
 		queue_free()  # Despawn the rocket
-		# body.queue_free()  # Despawn the asteroid

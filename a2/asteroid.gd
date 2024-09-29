@@ -31,14 +31,10 @@ func on_hit():
 	var score_label = get_node("/root/Main Scene/ScoreLabel")
 	score_label.increment_score()
 
-	print("on_hit()")
-	print("size", size, "> min_size", min_size)
 	if size > min_size:
 		# Spawn two smaller asteroids
-		print("Spawning smaller asteroids")
 		spawn_smaller_asteroids()
 	else:
-		print("Asteroid is too small")
 		# Remove the asteroid if it's too small
 		queue_free()
 
@@ -68,7 +64,7 @@ func spawn_smaller_asteroid(new_size: float, new_position: Vector2, new_velocity
 # Function to set the asteroid size
 func set_size(new_size: float):
 	size = new_size
-	scale = Vector2(size / 2, size / 2)  # Assuming the original size is 64x64
+	scale = Vector2(size / 2, size / 2)
 
 
 func _on_body_entered(body: Node) -> void:

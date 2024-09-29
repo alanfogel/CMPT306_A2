@@ -2,7 +2,7 @@ extends Node2D
 
 @export var asteroid_scene := preload("res://asteroid.tscn")
 @export var spawn_interval := 1.0
-@export var spawn_distance := 780.0 # should I make this the screen size?
+@export var spawn_distance := 780.0 #TODO: should I make this the screen size?
 @export var min_speed := 50.0
 @export var max_speed := 200.0
 
@@ -15,8 +15,6 @@ func _ready() -> void:
 	timer.autostart = true
 	timer.connect("timeout", Callable(self, "_spawn_asteroid"))
 	add_child(timer)
-	# var asteroid = asteroid_scene.instantiate() as Asteroid
-	# add_child(asteroid)
 	_spawn_asteroid()
 	
 	
