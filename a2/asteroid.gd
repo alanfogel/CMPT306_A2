@@ -28,6 +28,9 @@ func _physics_process(_delta: float) -> void:
 		queue_free()
 
 func on_hit():
+	var score_label = get_node("/root/Main Scene/ScoreLabel")
+	score_label.increment_score()
+
 	print("on_hit()")
 	print("size", size, "> min_size", min_size)
 	if size > min_size:

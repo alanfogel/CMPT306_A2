@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=44 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://b87412jm2lc3l" path="res://Assets/laser gun.wav" id="6_3rlhi"]
 [ext_resource type="AudioStream" uid="uid://dqyxxf5g6fjeq" path="res://Assets/embarrassed.wav" id="8_fh1mc"]
 [ext_resource type="AudioStream" uid="uid://bdasmcvdqfvjw" path="res://Assets/machine stop 1.wav" id="8_oxr5q"]
+[ext_resource type="Script" path="res://score_label.gd" id="12_18nrk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2wlx"]
 bg_color = Color(0, 0, 0, 1)
@@ -370,7 +371,6 @@ texture = ExtResource("2_o55ta")
 
 [node name="Label" type="Label" parent="Camera2D/Sprite2D"]
 z_index = 1
-anchors_preset = -1
 offset_left = 351.304
 offset_top = -278.261
 offset_right = 496.304
@@ -386,5 +386,17 @@ autostart = true
 [node name="GlobalAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_oxr5q")
 bus = &"Explosion"
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -567.0
+offset_top = 294.0
+offset_right = 134.0
+offset_bottom = 322.0
+grow_vertical = 0
+text = "Score: 0"
+script = ExtResource("12_18nrk")
 
 [connection signal="timeout" from="Healthbar/Control/HealthBar/Timer" to="." method="_on_timer_timeout"]
