@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 	var fire_sprite = $FireSprite
 	var warp_sprite = $WarpSprite
 	var fire_sound = $FireSound
+	var collision_sound = $CollisionSound
 
 	var camera = get_viewport().get_camera_2d()
 	var viewport_size = get_viewport_rect().size
@@ -72,10 +73,8 @@ func _physics_process(delta: float) -> void:
 
 		# Play Idle animation only if not rotating or firing
 		if not is_rotating:
-			print("back to idle from rotating")
 			rotate_sprite.play("Idle")
 		if not is_firing:
-			print("back to idle from firing")
 			fire_sprite.play("Idle")
 	
 	# Update fire animation timer
@@ -102,6 +101,8 @@ func _physics_process(delta: float) -> void:
 		spark_particles.global_position = collision.get_position()
 		spark_particles.emitting = true
 		damage_timer = damage_duration
+		print(collision_sound)
+		collision_sound.play()
 
 
 	# Update damage timer
@@ -140,7 +141,6 @@ func _physics_process(delta: float) -> void:
 	if warping_timer > 0:
 		warping_timer -= delta
 		if warping_timer <= 0:
-			print("back to idle from warping")
 			warp_sprite.play("Idle")  # Optionally switch to an idle animation
 
 	if fire_cooldown > 0:
