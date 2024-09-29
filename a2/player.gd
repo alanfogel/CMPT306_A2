@@ -5,7 +5,8 @@ extends CharacterBody2D
 @export var fire_rate := 0.75 
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
-
+@export var max_health := 100
+@export var damage_amount := 10
 
 var rocket_scene := load("res://rocket.tscn")
 var damage_timer := 0.0
@@ -16,12 +17,19 @@ var fire_cooldown := 0.0
 var fire_animation_timer := 0.0
 var is_firing = false
 var spark_particles: GPUParticles2D
+var health := max_health
+var health_bar: ProgressBar
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	spark_particles = $GPUParticles2D
 	spark_particles.emitting = false
+	print(health_bar)
+	health_bar = get_node("/root/Main Scene/Healthbar/Control/HealthBar")
+	print(health_bar)
+	health_bar.max_value = max_health  # Set the max value of the health bar
+	health_bar.value = max_health  # Initialize the health bar to full
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -103,6 +111,9 @@ func _physics_process(delta: float) -> void:
 		damage_timer = damage_duration
 		print(collision_sound)
 		collision_sound.play()
+		# Decrease health and update health bar
+		health -= damage_amount
+		health_bar.value = health
 
 
 	# Update damage timer

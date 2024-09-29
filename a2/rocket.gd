@@ -34,6 +34,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("asteroids"):
-		get_parent().get_child(4).play()
+		get_parent().get_child(5).play()
 		queue_free()  # Despawn the rocket
 		body.queue_free()  # Despawn the asteroid

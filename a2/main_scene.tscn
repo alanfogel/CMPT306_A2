@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=44 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
 [ext_resource type="Script" path="res://main_scene.gd" id="1_u0i54"]
+[ext_resource type="Script" path="res://health_bar.gd" id="2_4hg67"]
 [ext_resource type="Texture2D" uid="uid://7he6ylsvw371" path="res://Assets/Main Ship_Spritesheet.png" id="2_utvax"]
 [ext_resource type="Script" path="res://animated_sprite_2d.gd" id="3_1cj5q"]
 [ext_resource type="Script" path="res://fire_sprite.gd" id="5_31rsb"]
@@ -10,6 +11,23 @@
 [ext_resource type="AudioStream" uid="uid://dqyxxf5g6fjeq" path="res://Assets/embarrassed.wav" id="8_fh1mc"]
 [ext_resource type="AudioStream" uid="uid://bdasmcvdqfvjw" path="res://Assets/machine stop 1.wav" id="8_oxr5q"]
 [ext_resource type="PackedScene" uid="uid://bni87vr55r8hm" path="res://asteroid.tscn" id="9_372ok"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iqs42"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_351yq"]
+bg_color = Color(0.153396, 0.697801, 0.547584, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3vdm"]
+bg_color = Color(0.0962047, 0.0962048, 0.0962047, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6g6mn"]
+bg_color = Color(0.762404, 0.762404, 0.762403, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hstjg"]
 atlas = ExtResource("1_fulav")
@@ -292,6 +310,46 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Alan Fogel - AJF214"
 
+[node name="Healthbar" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Healthbar"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HealthBar" type="ProgressBar" parent="Healthbar/Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_iqs42")
+theme_override_styles/fill = SubResource("StyleBoxFlat_351yq")
+value = 66.0
+show_percentage = false
+script = ExtResource("2_4hg67")
+
+[node name="DamageBar" type="ProgressBar" parent="Healthbar/Control/HealthBar"]
+visible = false
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_h3vdm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6g6mn")
+value = 80.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="Healthbar/Control/HealthBar"]
+wait_time = 0.4
+one_shot = true
+
 [node name="Player" type="CharacterBody2D" parent="."]
 collision_layer = 7
 collision_mask = 7
@@ -350,3 +408,5 @@ bus = &"Explosion"
 
 [node name="Asteroid" parent="." instance=ExtResource("9_372ok")]
 position = Vector2(11, 88)
+
+[connection signal="timeout" from="Healthbar/Control/HealthBar/Timer" to="." method="_on_timer_timeout"]
