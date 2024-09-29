@@ -119,7 +119,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mkql7")
 }, {
-"duration": 20.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_u21s6")
 }],
 "loop": true,
@@ -336,7 +336,7 @@ script = ExtResource("5_31rsb")
 [node name="DamageSprite" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
-animation = &"Die"
+animation = &"deadge"
 script = ExtResource("3_1cj5q")
 
 [node name="WarpSprite" type="AnimatedSprite2D" parent="Player"]

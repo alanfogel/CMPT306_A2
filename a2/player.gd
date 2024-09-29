@@ -21,6 +21,7 @@ var spark_particles: GPUParticles2D
 var health := max_health
 var health_bar: ProgressBar
 var animation_player: AnimatedSprite2D
+var warp_sprite: AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,6 +29,7 @@ func _ready() -> void:
 	spark_particles.emitting = false
 	health_bar = get_node("/root/Main Scene/Healthbar/Control/HealthBar")
 	animation_player = $DamageSprite
+	warp_sprite = $WarpSprite  # Reference to the WarpSprite
 	health_bar.max_value = max_health  # Set the max value of the health bar
 	health_bar.value = max_health  # Initialize the health bar to full
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
@@ -40,7 +42,6 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var rotate_sprite = $RotateSprite
 	var fire_sprite = $FireSprite
-	var warp_sprite = $WarpSprite
 	var fire_sound = $FireSound
 	var collision_sound = $CollisionSound
 
@@ -95,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	# Move the player and check for collisions
 	var collision = move_and_collide(velocity * delta)
 	
-	move_and_slide() # TODO: is this exter
+	move_and_slide()
 		
 	var collided = false
 	if collision:
@@ -104,7 +105,7 @@ func _physics_process(delta: float) -> void:
 		var normal = collision.get_normal()
 		velocity = velocity.bounce(normal) * bounce_factor
 
-	if collided:
+	if collided and damage_timer <= 0:
 		spark_particles.global_position = collision.get_position()
 		spark_particles.emitting = true
 		damage_timer = damage_duration
@@ -152,6 +153,7 @@ func _physics_process(delta: float) -> void:
 
 	# Play warping animation if teleported
 	if teleported:
+		warp_sprite.visible = true  # Show the WarpSprite
 		warp_sprite.play("Warping")
 		warping_timer = warping_duration
 
@@ -159,13 +161,7 @@ func _physics_process(delta: float) -> void:
 	if warping_timer > 0:
 		warping_timer -= delta
 		if warping_timer <= 0:
-			warp_sprite.play("Idle")  # Optionally switch to an idle animation
+			warp_sprite.visible = false  # Hide the WarpSprite
 
 	if fire_cooldown > 0:
 		fire_cooldown -= delta
-
-# Called when the death animation finishes
-# TODO: Delete this function if not needed
-func _on_animation_finished(anim_name: String) -> void:
-	if anim_name == "Die":
-		get_tree().paused = true
