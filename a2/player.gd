@@ -6,11 +6,12 @@ extends CharacterBody2D
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
 @export var max_health := 100
-@export var damage_amount := 10
+@export var damage_amount := 50
 
 var rocket_scene := load("res://rocket.tscn")
 var damage_timer := 0.0
 var damage_duration := 1.0
+var death_timer := 1.0
 var warping_timer := 0.0
 var warping_duration := 1.0
 var fire_cooldown := 0.0
@@ -19,17 +20,21 @@ var is_firing = false
 var spark_particles: GPUParticles2D
 var health := max_health
 var health_bar: ProgressBar
-
+var animation_player: AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	spark_particles = $GPUParticles2D
 	spark_particles.emitting = false
-	print(health_bar)
 	health_bar = get_node("/root/Main Scene/Healthbar/Control/HealthBar")
-	print(health_bar)
+	animation_player = $DamageSprite
+	if animation_player == null:
+		print("AnimatedSprite2D node not found")
+		return
 	health_bar.max_value = max_health  # Set the max value of the health bar
 	health_bar.value = max_health  # Initialize the health bar to full
+	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	print("Connected animation_finished signal")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -99,17 +104,14 @@ func _physics_process(delta: float) -> void:
 	var collided = false
 	if collision:
 		collided = true
-		print("Collision!")
 		# Apply bounce effect
 		var normal = collision.get_normal()
 		velocity = velocity.bounce(normal) * bounce_factor
-		print("Collided set to true")
 
 	if collided:
 		spark_particles.global_position = collision.get_position()
 		spark_particles.emitting = true
 		damage_timer = damage_duration
-		print(collision_sound)
 		collision_sound.play()
 		# Decrease health and update health bar
 		health -= damage_amount
@@ -122,8 +124,18 @@ func _physics_process(delta: float) -> void:
 		if damage_timer <= 0:
 			spark_particles.emitting = false
 
+	# Death Animation
+	if health <= 0:
+		animation_player.play("Die")
 
 
+	# Update death timer
+	if health <= 0 && death_timer > 0:
+		death_timer -= delta
+		if death_timer <= 0:
+			print("deadge fr fr")
+			get_tree().reload_current_scene()
+		
 	# Teleporting the player to the other side of the screen
 	var camera_position = camera.global_position
 	var half_viewport_size = viewport_size / 2
@@ -156,3 +168,11 @@ func _physics_process(delta: float) -> void:
 
 	if fire_cooldown > 0:
 		fire_cooldown -= delta
+
+# Called when the death animation finishes
+func _on_animation_finished(anim_name: String) -> void:
+	print("Animation finished: ", anim_name)
+	if anim_name == "Die":
+		print("anim_name == Die")
+		print("Death animation finished, pausing the game")
+		get_tree().paused = true

@@ -16,7 +16,7 @@ func _ready() -> void:
 	add_to_group("asteroids")
 
 # Called at a fixed frequency. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Move the asteroid
 	# position += velocity * delta
 	# rotation += rotation_speed * delta

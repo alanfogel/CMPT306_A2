@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=45 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
@@ -113,6 +113,10 @@ region = Rect2(32, 128, 32, 32)
 atlas = ExtResource("1_fulav")
 region = Rect2(64, 128, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ienbj"]
+atlas = ExtResource("1_fulav")
+region = Rect2(96, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_1e1v0"]
 animations = [{
 "frames": [{
@@ -214,6 +218,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"Warping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ienbj")
+}],
+"loop": true,
+"name": &"deadge",
 "speed": 5.0
 }]
 
@@ -356,12 +368,6 @@ collision_mask = 7
 script = ExtResource("1_s2bo5")
 bounce_factor = 1
 
-[node name="DamageSprite" type="AnimatedSprite2D" parent="Player"]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_1e1v0")
-animation = &"Die"
-script = ExtResource("3_1cj5q")
-
 [node name="RotateSprite" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
@@ -377,6 +383,12 @@ script = ExtResource("5_31rsb")
 sprite_frames = SubResource("SpriteFrames_au2bv")
 animation = &"Idle"
 script = ExtResource("5_31rsb")
+
+[node name="DamageSprite" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1e1v0")
+animation = &"deadge"
+script = ExtResource("3_1cj5q")
 
 [node name="FireSound" type="AudioStreamPlayer2D" parent="Player"]
 stream = ExtResource("6_3rlhi")
