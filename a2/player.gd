@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
 @export var max_health := 100
-@export var damage_amount := 50
+@export var damage_amount := 20
 
 var rocket_scene := load("res://rocket.tscn")
 var damage_timer := 0.0

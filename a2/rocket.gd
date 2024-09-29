@@ -24,16 +24,8 @@ func _on_Timer_timeout() -> void:
 	queue_free()
 
 
-func _on_area_entered(area: Area2D) -> void:
-	
-	if area.is_in_group("asteroids"):
-		get_parent().get_child(4).play()
-		queue_free()  # Despawn the rocket
-		area.queue_free()  # Despawn the asteroid
-
-
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("asteroids"):
-		get_parent().get_child(5).play()
+		get_parent().get_child(4).play()
 		queue_free()  # Despawn the rocket
 		body.queue_free()  # Despawn the asteroid
