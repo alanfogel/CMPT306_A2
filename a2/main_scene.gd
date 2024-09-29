@@ -44,6 +44,7 @@ func _spawn_asteroid() -> void:
 	# Randomize the initial size of the asteroid
 	var scale_factor = randf_range(0.5, 2.0)
 	asteroid.get_node("CollisionShape2D").scale = Vector2(scale_factor, scale_factor)
+	asteroid.set_size(scale_factor)
 
 	# Set the mass of the asteroid based on its size
 	asteroid.mass = scale_factor * 10
