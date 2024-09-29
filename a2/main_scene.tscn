@@ -305,6 +305,7 @@ script = ExtResource("5_31rsb")
 stream = ExtResource("6_3rlhi")
 volume_db = -21.82
 pitch_scale = 0.59
+bus = &"Fire_Sound"
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Player"]
 polygon = PackedVector2Array(0, -10, 7, 0, 12, 9, 0, 10, -12, 9, -7, 0)
@@ -317,3 +318,4 @@ autostart = true
 
 [node name="GlobalAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_oxr5q")
+bus = &"Explosion"

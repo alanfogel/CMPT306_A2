@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c35lwfalhw56k"]
+[gd_scene load_steps=4 format=3 uid="uid://c35lwfalhw56k"]
 
 [ext_resource type="Script" path="res://rocket.gd" id="1_a2wcu"]
 [ext_resource type="Texture2D" uid="uid://bxiynbi4tk48l" path="res://Assets/Rocket.png" id="2_7weee"]
-[ext_resource type="AudioStream" uid="uid://bdasmcvdqfvjw" path="res://Assets/machine stop 1.wav" id="3_dq8x6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mhqwq"]
 radius = 2.0
@@ -19,9 +18,5 @@ position = Vector2(0.5, -0.5)
 shape = SubResource("CapsuleShape2D_mhqwq")
 
 [node name="Timer" type="Timer" parent="."]
-
-[node name="explosion_sound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_dq8x6")
-volume_db = -80.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
