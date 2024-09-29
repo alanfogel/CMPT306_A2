@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=38 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
@@ -256,6 +256,16 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gid70"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+color = Color(0.891246, 0.64865, 0.186308, 1)
+
 [node name="Main Scene" type="Node2D"]
 script = ExtResource("1_u0i54")
 
@@ -287,12 +297,16 @@ collision_mask = 7
 script = ExtResource("1_s2bo5")
 bounce_factor = 1
 
+[node name="DamageSprite" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1e1v0")
+animation = &"Die"
+script = ExtResource("3_1cj5q")
+
 [node name="RotateSprite" type="AnimatedSprite2D" parent="Player"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1e1v0")
-animation = &"Warping"
-frame = 2
-frame_progress = 0.247611
+animation = &"Die"
 script = ExtResource("3_1cj5q")
 
 [node name="FireSprite" type="AnimatedSprite2D" parent="Player"]
@@ -313,6 +327,11 @@ bus = &"Fire_Sound"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
 polygon = PackedVector2Array(0, -10, 7, 0, 12, 9, 0, 10, -12, 9, -7, 0)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_gid70")
+lifetime = 0.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

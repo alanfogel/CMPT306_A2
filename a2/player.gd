@@ -2,22 +2,27 @@ extends CharacterBody2D
 
 @export var turn_speed := 3.0
 @export var recoil_force := 30.0
-@export var warping_duration := 1.0
 @export var fire_rate := 0.75 
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
 
 
 var rocket_scene := load("res://rocket.tscn")
+var damage_timer := 0.0
+var damage_duration := 1.0
 var warping_timer := 0.0
+var warping_duration := 1.0
 var fire_cooldown := 0.0
 var fire_animation_timer := 0.0
 var is_firing = false
+var spark_particles: GPUParticles2D
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	spark_particles = $GPUParticles2D
+	spark_particles.emitting = false
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -67,8 +72,10 @@ func _physics_process(delta: float) -> void:
 
 		# Play Idle animation only if not rotating or firing
 		if not is_rotating:
+			print("back to idle from rotating")
 			rotate_sprite.play("Idle")
 		if not is_firing:
+			print("back to idle from firing")
 			fire_sprite.play("Idle")
 	
 	# Update fire animation timer
@@ -82,18 +89,26 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 		
+	var collided = false
 	if collision:
+		collided = true
 		print("Collision!")
 		# Apply bounce effect
 		var normal = collision.get_normal()
 		velocity = velocity.bounce(normal) * bounce_factor
+		print("Collided set to true")
 
-#		for i in get_slide_collision_count():
-#			var c = get_slide_collision(0)
-#			if c.get_collider().is_in_group("asteroids"):
-#				print("Asteroid collision!")
-#				c.get_collider().apply_central_impulse(-c.get_normal() * recoil_force)
+	if collided:
+		spark_particles.global_position = collision.get_position()
+		spark_particles.emitting = true
+		damage_timer = damage_duration
 
+
+	# Update damage timer
+	if damage_timer > 0:
+		damage_timer -= delta
+		if damage_timer <= 0:
+			spark_particles.emitting = false
 
 
 
@@ -125,6 +140,7 @@ func _physics_process(delta: float) -> void:
 	if warping_timer > 0:
 		warping_timer -= delta
 		if warping_timer <= 0:
+			print("back to idle from warping")
 			warp_sprite.play("Idle")  # Optionally switch to an idle animation
 
 	if fire_cooldown > 0:
