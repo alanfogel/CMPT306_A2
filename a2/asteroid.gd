@@ -11,9 +11,9 @@ func _ready() -> void:
 	gravity_scale = 0
 	linear_damp = 0
 	angular_damp = 0
-	add_to_group("asteroids")
 	linear_velocity = velocity
 	angular_velocity = rotation_speed
+	add_to_group("asteroids")
 
 # Called at a fixed frequency. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 	# Check if the asteroid is too far from the screen
 	if position.length() > max_distance:
 		queue_free()
+
 
 
 func _on_body_entered(body: Node) -> void:

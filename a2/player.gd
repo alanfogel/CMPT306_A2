@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var warping_duration := 1.0
 @export var fire_rate := 0.75 
 @export var fire_animation_duration := 0.5
+@export var bounce_factor := 15
 
 
 var rocket_scene := load("res://rocket.tscn")
@@ -83,12 +84,15 @@ func _physics_process(delta: float) -> void:
 		
 	if collision:
 		print("Collision!")
+		# Apply bounce effect
+		var normal = collision.get_normal()
+		velocity = velocity.bounce(normal) * bounce_factor
 
-		for i in get_slide_collision_count():
-			var c = get_slide_collision(0)
-			if c.get_collider().is_in_group("asteroids"):
-				print("Asteroid collision!")
-				c.get_collider().apply_central_impulse(-c.get_normal() * recoil_force)
+#		for i in get_slide_collision_count():
+#			var c = get_slide_collision(0)
+#			if c.get_collider().is_in_group("asteroids"):
+#				print("Asteroid collision!")
+#				c.get_collider().apply_central_impulse(-c.get_normal() * recoil_force)
 
 
 

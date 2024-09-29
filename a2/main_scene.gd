@@ -45,6 +45,9 @@ func _spawn_asteroid() -> void:
 	var scale_factor = randf_range(0.5, 2.0)
 	asteroid.get_node("CollisionShape2D").scale = Vector2(scale_factor, scale_factor)
 
+	# Set the mass of the asteroid based on its size
+	asteroid.mass = scale_factor * 10
+
 	# Randomize the speed of the asteroid
 	var speed = randf_range(min_speed, max_speed)
 	asteroid.velocity = direction * speed
