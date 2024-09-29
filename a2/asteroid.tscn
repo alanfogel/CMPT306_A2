@@ -18,5 +18,3 @@ rotation = 0.958186
 scale = Vector2(0.95, 0.95)
 skew = 0.178023
 shape = SubResource("CircleShape2D_0f1tc")
-
-[node name="Area2D" type="Area2D" parent="."]
