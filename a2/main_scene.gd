@@ -19,7 +19,6 @@ func _ready() -> void:
 # Function to spawn an asteroid outside the camera view
 func _spawn_asteroid() -> void:
 	var asteroid = asteroid_scene.instantiate()
-	var screen_center = get_viewport().size / 1500.0
 	
 	# Randomize the spawn position outside the camera view
 	var angle = randf_range(0, 2 * PI)
@@ -47,4 +46,5 @@ func _spawn_asteroid() -> void:
 	var speed = randf_range(min_speed, max_speed)
 	asteroid.velocity = direction * speed
 
+	asteroid.add_to_group("asteroids")
 	add_child(asteroid)

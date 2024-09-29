@@ -305,6 +305,9 @@ stream = ExtResource("6_3rlhi")
 volume_db = -21.82
 pitch_scale = 0.59
 
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Player"]
+polygon = PackedVector2Array(0, -10, 7, 0, 12, 9, 0, 10, -12, 9, -7, 0)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="AsteroidTimer" type="Timer" parent="."]

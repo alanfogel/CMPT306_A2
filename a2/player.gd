@@ -50,6 +50,7 @@ func _physics_process(delta: float) -> void:
 
 			rocket.position = position
 			rocket.rotation = rotation
+			rocket.add_to_group("rockets")
 			get_parent().add_child(rocket)
 
 			# player is pushed backwards

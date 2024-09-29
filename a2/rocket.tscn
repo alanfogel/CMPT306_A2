@@ -1,14 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://c35lwfalhw56k"]
+[gd_scene load_steps=4 format=3 uid="uid://c35lwfalhw56k"]
 
 [ext_resource type="Script" path="res://rocket.gd" id="1_a2wcu"]
 [ext_resource type="Texture2D" uid="uid://bxiynbi4tk48l" path="res://Assets/Rocket.png" id="2_7weee"]
 
-[node name="rocket" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mhqwq"]
+radius = 2.0
+height = 8.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Rocket" type="Area2D"]
 script = ExtResource("1_a2wcu")
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_7weee")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("CapsuleShape2D_mhqwq")
+
 [node name="Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
