@@ -76,8 +76,22 @@ func _physics_process(delta: float) -> void:
 			if fire_animation_timer <= 0:
 				is_firing = false
 	
-	# Move the player
-	move_and_slide();
+	# Move the player and check for collisions
+	var collision = move_and_collide(velocity * delta)
+	
+	move_and_slide()
+		
+	if collision:
+		print("Collision!")
+
+		for i in get_slide_collision_count():
+			var c = get_slide_collision(0)
+			if c.get_collider().is_in_group("asteroids"):
+				print("Asteroid collision!")
+				c.get_collider().apply_central_impulse(-c.get_normal() * recoil_force)
+
+
+
 
 	# Teleporting the player to the other side of the screen
 	var camera_position = camera.global_position

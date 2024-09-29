@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dkcsftjub2r2e"]
+[gd_scene load_steps=37 format=3 uid="uid://dkcsftjub2r2e"]
 
 [ext_resource type="Texture2D" uid="uid://dbuf1v0c5ugj" path="res://Main Ship_Spritesheet.png" id="1_fulav"]
 [ext_resource type="Script" path="res://player.gd" id="1_s2bo5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://fire_sprite.gd" id="5_31rsb"]
 [ext_resource type="AudioStream" uid="uid://b87412jm2lc3l" path="res://Assets/laser gun.wav" id="6_3rlhi"]
 [ext_resource type="AudioStream" uid="uid://bdasmcvdqfvjw" path="res://Assets/machine stop 1.wav" id="8_oxr5q"]
+[ext_resource type="PackedScene" uid="uid://bni87vr55r8hm" path="res://asteroid.tscn" id="9_372ok"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hstjg"]
 atlas = ExtResource("1_fulav")
@@ -281,6 +282,8 @@ size_flags_vertical = 0
 text = "Alan Fogel - AJF214"
 
 [node name="Player" type="CharacterBody2D" parent="."]
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_s2bo5")
 
 [node name="RotateSprite" type="AnimatedSprite2D" parent="Player"]
@@ -307,7 +310,7 @@ volume_db = -21.82
 pitch_scale = 0.59
 bus = &"Fire_Sound"
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Player"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
 polygon = PackedVector2Array(0, -10, 7, 0, 12, 9, 0, 10, -12, 9, -7, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -319,3 +322,6 @@ autostart = true
 [node name="GlobalAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_oxr5q")
 bus = &"Explosion"
+
+[node name="Asteroid" parent="." instance=ExtResource("9_372ok")]
+position = Vector2(11, 88)

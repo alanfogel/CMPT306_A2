@@ -8,6 +8,8 @@ radius = 2.0
 height = 8.0
 
 [node name="Rocket" type="Area2D"]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_a2wcu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -20,3 +22,4 @@ shape = SubResource("CapsuleShape2D_mhqwq")
 [node name="Timer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

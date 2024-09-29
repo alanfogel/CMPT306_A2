@@ -2,7 +2,7 @@ extends Node2D
 
 @export var asteroid_scene := preload("res://asteroid.tscn")
 @export var spawn_interval := 1.0
-@export var spawn_distance := 500.0 # should I make this the screen size?
+@export var spawn_distance := 780.0 # should I make this the screen size?
 @export var min_speed := 50.0
 @export var max_speed := 200.0
 
@@ -15,11 +15,15 @@ func _ready() -> void:
 	timer.autostart = true
 	timer.connect("timeout", Callable(self, "_spawn_asteroid"))
 	add_child(timer)
+	# var asteroid = asteroid_scene.instantiate() as Asteroid
+	# add_child(asteroid)
+	_spawn_asteroid()
+	
+	
 
 # Function to spawn an asteroid outside the camera view
 func _spawn_asteroid() -> void:
-	var asteroid = asteroid_scene.instantiate()
-	
+	var asteroid = asteroid_scene.instantiate() as Asteroid
 	# Randomize the spawn position outside the camera view
 	var angle = randf_range(0, 2 * PI)
 	var spawn_vector = Vector2(cos(angle), sin(angle))
@@ -28,7 +32,6 @@ func _spawn_asteroid() -> void:
 	
 	# Set the asteroid's velocity towards the center of the screen
 	var direction = (-asteroid.position).normalized()
-
 
 	# Add some random offset to the direction
 	var random_offset = Vector2(randf_range(-0.4, 0.4), randf_range(-0.4, 0.4))
@@ -40,11 +43,9 @@ func _spawn_asteroid() -> void:
 
 	# Randomize the initial size of the asteroid
 	var scale_factor = randf_range(0.5, 2.0)
-	asteroid.scale = Vector2(scale_factor, scale_factor)
+	asteroid.get_node("CollisionShape2D").scale = Vector2(scale_factor, scale_factor)
 
 	# Randomize the speed of the asteroid
 	var speed = randf_range(min_speed, max_speed)
 	asteroid.velocity = direction * speed
-
-	asteroid.add_to_group("asteroids")
 	add_child(asteroid)

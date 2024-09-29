@@ -6,11 +6,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_0f1tc"]
 radius = 19.0
 
-[node name="Asteroid" type="Area2D"]
+[node name="Asteroid" type="RigidBody2D"]
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_ql78d")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_ltqc3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)
@@ -18,3 +17,12 @@ rotation = 0.958186
 scale = Vector2(0.95, 0.95)
 skew = 0.178023
 shape = SubResource("CircleShape2D_0f1tc")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(-0.519803, -1.49003)
+rotation = -1.09552
+scale = Vector2(1, 1)
+skew = 0.0897225
+texture = ExtResource("2_ltqc3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
