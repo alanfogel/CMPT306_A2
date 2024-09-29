@@ -6,12 +6,12 @@ extends CharacterBody2D
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
 @export var max_health := 100
-@export var damage_amount := 20
+@export var damage_amount := 100
 
 var rocket_scene := load("res://rocket.tscn")
 var damage_timer := 0.0
 var damage_duration := 1.0
-var death_timer := 1.0
+var death_timer := 2.0
 var warping_timer := 0.0
 var warping_duration := 1.0
 var fire_cooldown := 0.0
@@ -28,11 +28,12 @@ func _ready() -> void:
 	spark_particles = $GPUParticles2D
 	spark_particles.emitting = false
 	health_bar = get_node("/root/Main Scene/Healthbar/Control/HealthBar")
-	animation_player = $DamageSprite
+	animation_player = $DamageSprite2
 	warp_sprite = $WarpSprite  # Reference to the WarpSprite
 	health_bar.max_value = max_health  # Set the max value of the health bar
 	health_bar.value = max_health  # Initialize the health bar to full
-	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	warp_sprite.visible = false  # Hide the WarpSprite
+	animation_player.visible = false  # Hide the animation player
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -123,13 +124,20 @@ func _physics_process(delta: float) -> void:
 
 	# Death Animation
 	if health <= 0:
-		animation_player.play("Die")
+		animation_player.visible = true
+		animation_player.play("Death")
+		print("Playing death animation")
 
 
 	# Update death timer
 	if health <= 0 && death_timer > 0:
 		death_timer -= delta
 		if death_timer <= 0:
+			animation_player.visible = false
+			# get_tree().set_deferred("paused", true)
+			# wait 2 seconds
+			# await get_tree().create_timer(2.0).timeout
+			# get_tree().set_deferred("paused", false)
 			get_tree().reload_current_scene()
 		
 	# Teleporting the player to the other side of the screen

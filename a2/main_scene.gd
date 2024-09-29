@@ -37,7 +37,7 @@ func _spawn_asteroid() -> void:
 	direction = direction.normalized()
 
 	# Randomize the rotational speed
-	asteroid.rotation_speed = randf_range(-2 * PI, 2 * PI)
+	asteroid.rotation_speed = randf_range(-2.0, 2.0)
 
 	# Randomize the initial size of the asteroid
 	var scale_factor = randf_range(0.5, 2.0)

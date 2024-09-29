@@ -15,7 +15,7 @@ var asteroid_scene = preload("res://asteroid.tscn")
 func _ready() -> void:
 	gravity_scale = 0
 	linear_damp = 0
-	angular_damp = 0
+	angular_damp = -1.0
 	linear_velocity = velocity
 	angular_velocity = rotation_speed
 	add_to_group("asteroids")
