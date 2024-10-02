@@ -33,7 +33,7 @@ func on_hit():
 
 	if size > min_size:
 		# Spawn two smaller asteroids
-		spawn_smaller_asteroids()
+		call_deferred("spawn_smaller_asteroids")
 	else:
 		# Remove the asteroid if it's too small
 		queue_free()
@@ -67,5 +67,5 @@ func set_size(new_size: float):
 	scale = Vector2(size / 2, size / 2)
 
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	on_hit()

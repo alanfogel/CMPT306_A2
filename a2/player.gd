@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var fire_animation_duration := 0.5
 @export var bounce_factor := 15
 @export var max_health := 100
-@export var damage_amount := 100
+@export var damage_amount := 34
 
 var rocket_scene := load("res://rocket.tscn")
 var damage_timer := 0.0
@@ -126,7 +126,6 @@ func _physics_process(delta: float) -> void:
 	if health <= 0:
 		animation_player.visible = true
 		animation_player.play("Death")
-		print("Playing death animation")
 
 
 	# Update death timer

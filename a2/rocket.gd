@@ -5,7 +5,8 @@ extends Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:    
-	connect("body_entered", Callable(self, "_on_body_entered"))
+	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
+		connect("body_entered", Callable(self, "_on_body_entered"))
 	# Start a timer to remove the rocket after its lifetime
 	var timer = Timer.new()
 	timer.wait_time = lifetime
@@ -26,7 +27,7 @@ func _on_Timer_timeout() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("asteroids"):
-		get_parent().get_child(4).play() # TODO: This is a hack, find a better way to play the sound
+		get_parent().get_node("GlobalAudioPlayer").play()
 		var asteroid = body as Asteroid
 		asteroid.on_hit()
 		queue_free()  # Despawn the rocket
